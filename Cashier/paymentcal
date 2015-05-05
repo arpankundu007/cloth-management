@@ -1,0 +1,34 @@
+<?php
+
+                                      
+       $servername = "localhost";
+       $username = "root";
+       $password = "1234";
+       $dbname = "cloth_shop";
+       $conn = new mysqli($servername, $username, $password, $dbname);
+       if ($conn->connect_error) {
+          die("Connection failed: " . $conn->connect_error);
+        } 
+        if (isset($_POST['cashgiven']) && isset($_POST['userid']) && isset($_POST['tp'])){
+          $x = $_POST['cashgiven'];
+          $y = $_POST['userid'];
+          $z = $_POST['tp'];
+          $b = $x - $z;
+          if($b > 0){
+           $sqli = "INSERT INTO PaymentDetails (User_id, Totalprice, Cashgiven, Balance) VALUES('$y', '$z', '$x', '$b')";
+          
+           $query = "DELETE *  FROM OrderDetails";
+           $result = mysqli_query($conn, $query);
+           header('Location:/db/Cashier/stats.php');
+          }
+          else{
+            echo 'Cash given is not sufficient';
+          }
+        }
+
+        else{
+          echo $_POST['cashgiven'];
+          echo $_POST['userid']; 
+          echo $_POST['tp'];
+        }
+?>
